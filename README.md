@@ -1,70 +1,81 @@
-# Getting Started with Create React App
+# TodoList 만들기
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+React로 만든 투두리스트입니다.<br>
+스타일은 styled-components를 이용해 꾸몄습니다.
 
-## Available Scripts
+<hr>
 
-In the project directory, you can run:
+## 1. App.js
 
-### `yarn start`
+[코드보기](./src/App.js)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+_styled-components의 createGlobalStyle_ 을 이용해 body색을 회색계열로 만들었습니다.
+<br><br>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 2. components/TodoTemplate.js
 
-### `yarn test`
+[코드보기](./src/components/TodoTemplate.js)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+TodoList의 전체적인 틀을 만들어주는 컴포넌트입니다.
 
-### `yarn build`
+![todoTemplate](./images/todotemplate.PNG)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<br>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 3. components/TodoHead.js
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+[코드보기](./src/components/TodoHead.js)
 
-### `yarn eject`
+화면 위쪽에 오늘 날짜와 요일, 완료되지 않은 투두리스트의 갯수를 나타내주는 컴포넌트입니다.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+![todoTemplate](./images/todohead.PNG)
+<br><br>
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 4. components/TodoList.js
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+[코드보기](./src/components/TodoList.js)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+모든 투두리스트를 나타내주는 컴포넌트입니다.
+TodoContext.js에서 작성된 _useTodoState_ 를 통해 리스트의 상태를 불러와서 사용합니다.
 
-## Learn More
+각 리스트객체의 배열인 todos를 map함수를 이용해 리스트로 한 줄씩 만들어냅니다.
+![todoTemplate](./images/todolist.PNG)
+<br><br>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 5. components/TodoItem.js
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+[코드보기](./src/components/TodoItem.js)
 
-### Code Splitting
+각 리스트 한 줄에 대한 스타일과
+리스트항목 완료체크와 삭제 동작을 구현한 컴포넌트입니다.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+체크버튼을 누르면 _dispatch_ 가 동작하여 done값이 토글되고, 토글상태에 따라서 체크표시와 글자색이 바뀝니다.
+삭제버튼을 누르면 해당 리스트가 _dispatch_ 되고 filter함수를 통해 삭제됩니다.<br><br>
 
-### Analyzing the Bundle Size
+## 6. components/TodoCreate.js
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+[코드보기](./src/components/TodoCreate.js)
 
-### Making a Progressive Web App
+화면 가장 밑 중앙에 위치한 리스트추가버튼에 대한 컴포넌트입니다.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+_useState_ 를 사용해 open이라는 상태를 관리하여
+버튼을 눌렀을 때와 다시눌러 토글되었을 때마다 보여지는 화면이 다르게 나타납니다.
+(한 번 눌렀을 때는 open값이 true가 되면서 입력창이 나타나고,
+한 번 더 눌렀을 때는 open값이 false가 되면서 입력창이 사라집니다.)
 
-### Advanced Configuration
+입력창에 대한 입력값은 _useState_ 를 사용해 value라는 상태를 관리했습니다.
+입력창에서 값이 submit되면 _dispatch_ 가 동작하여 id, text, done 값을 가지는 객체를 보내서 리스트에 추가하도록 구현했습니다.
+![todoTemplate](./images/todocreate.PNG)
+<br><br>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 7. components/TodoContext.js
 
-### Deployment
+[코드보기](./src/components/TodoContext.js)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+투두리스트의 초기값과 Reducer를 만들어 _useReducer_ 에서 사용했습니다.
 
-### `yarn build` fails to minify
+_createContext()_ 로 _Todo리스트의 상태(TodoStateContext)_ 와 _디스패치(TodoDispatchContext)_ 와 _다음리스트의 id값(TodoNextIdContext)에 대한 context_ 를 만들고,<br>
+다른 컴포넌트에서 TodoState,TodoDispatch,TodoNextId Context를 빠르게쓰기위해
+_useTodoState, useTodoDispatch, useTodoNextId_ 함수를 만들었습니다.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+TodoProvider의 값을 어디서든 사용할 수 있도록 App.js에서 내용들의 가장 상위요소로 묶었습니다.<br><br>

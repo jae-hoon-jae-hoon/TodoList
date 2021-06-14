@@ -3,12 +3,12 @@ import styled from "styled-components";
 import { useTodoState } from "./TodoContext";
 
 const TodoHeadBlock = styled.div`
-  padding: 48px 32px 24px 32px;
+  padding: 40px 32px 24px 32px;
   border-bottom: 1px solid #e9ecef;
 
   h1 {
     margin: 0;
-    font-size: 36px;
+    font-size: 30px;
     color: #343a40;
   }
 
@@ -18,10 +18,10 @@ const TodoHeadBlock = styled.div`
     font-size: 21px;
   }
 
-  .tasks-left {
-    color: #96f2d7;
+  .tasks-undone {
+    margin-top: 30px;
+    color: #66e9c1;
     font-size: 18px;
-    margin-top: 40px;
     font-weight: bold;
   }
 `;
